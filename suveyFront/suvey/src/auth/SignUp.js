@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { sendCodeToEmail, signup } from '../api/ApiService';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         password: '',
     });
+
+    const [signupSatisfied, setSignupSatisfied] = useState(false);
+
+
+    const [emailSatisfied, setEmailSatisfied] = useState(false);    
+    const [passwordCheck, setPasswordCheck] = useState('');
     const [showVerificationInput, setShowVerificationInput] = useState(false);
-    
+    const [showEmailVerificationInput, setShowEmailVerificationInput] = useState(false);
+
+
+    useEffect(() => {   
+        setSignupSatisfied((formData.password === passwordCheck)&&emailSatisfied);
+    }, []);
+
     
     
     const handleChange = (e) => {
@@ -16,6 +30,10 @@ const SignUp = () => {
             ...formData,
             [e.target.name]: e.target.value,
         });
+    };
+    
+    const handlePasswordCheck = (e) => {
+        setPasswordCheck(e.target.value);
     };
 
     const handleSubmit = (e) => {
@@ -25,16 +43,28 @@ const SignUp = () => {
     };
 
     const handleSignUp = () => {
-        signup(formData);
+        if(signupSatisfied){
+            signup(formData).then((response) => {
+                <Link to={'/signin'}/>
+            });
+        }
+        else if(!emailSatisfied){
+            alert('이메일 인증을 완료해주세요.');
+        }
+        else if (formData.password !== passwordCheck) {
+            alert('비밀번호가 일치하지 않습니다.');
+        }
     };
 
     const handleVerificationClick = () => {
         sendCodeToEmail(formData.email).then((response) => {
             if (response.status === 400) {
                 alert('이미 가입된 이메일입니다.');
+                setShowEmailVerificationInput(false);
                 setShowVerificationInput(false);
             } else {
                 setShowVerificationInput(true);
+                setShowEmailVerificationInput(true);
                 
             }
         });
@@ -43,14 +73,19 @@ const SignUp = () => {
     };
 
     const handleEmailVerification =() =>{
+        setEmailSatisfied(true);
+    }
 
+    const handleCancle = () => {
+        <Link to={'/'}/>
     }
 
     return (
         <div>
             <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                //이메일 인증 완료시 disabled true로 변경
+                <div disabled={emailSatisfied}>
                     <label htmlFor="email">이메일: </label>
                     <input
                         type="email"
@@ -58,7 +93,7 @@ const SignUp = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        disabled
+                        disabled={showEmailVerificationInput}
                     />
                     <input type="button" value="인증번호" onClick={handleVerificationClick} />
                 </div>
@@ -100,9 +135,11 @@ const SignUp = () => {
                         id='password_check'
                         name='password_check'
                         value={formData.password_check}
+                        onChange={handlePasswordCheck}
                     />
                 </div>
-                <button type='submit'>취소</button>
+                <button type='submit' onClick={handleCancle}>취소</button>
+                //비밀번호와 비밀번호 확인이 같으면 회원가입 버튼 활성화
                 <button type="submit" onClick={handleSignUp}>회원가입</button>
             </form>
         </div>
