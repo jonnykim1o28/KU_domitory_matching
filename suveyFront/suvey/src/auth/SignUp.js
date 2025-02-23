@@ -17,7 +17,7 @@ const SignUp = () => {
     const [passwordCheck, setPasswordCheck] = useState('');
     const [showVerificationInput, setShowVerificationInput] = useState(false);
     const [showEmailVerificationInput, setShowEmailVerificationInput] = useState(false);
-
+    const [verificationCode, setVerificationCode] = useState('');
 
     useEffect(() => {   
         setSignupSatisfied((formData.password === passwordCheck)&&emailSatisfied);
@@ -56,6 +56,8 @@ const SignUp = () => {
         }
     };
 
+    /////////////////////////////////
+    //이메일 인증 관련
     const handleVerificationClick = () => {
         sendCodeToEmail(formData.email).then((response) => {
             if (response.status === 400) {
@@ -63,28 +65,45 @@ const SignUp = () => {
                 setShowEmailVerificationInput(false);
                 setShowVerificationInput(false);
             } else {
+                alert('인증번호가 전송되었습니다.');
                 setShowVerificationInput(true);
                 setShowEmailVerificationInput(true);
                 
             }
         });
-        //이메일이 이미 있으면 다시 입력하게 하고
-        //사용가능한 이메일이면 이메일 입력필드를 잠근다.
+  
     };
 
-    const handleEmailVerification =() =>{
+    const handleVerificationCodeChange = (e) => {
+        setVerificationCode(e.target.value);
+    };
+
+    const handleCodeVerification =() =>{
+        sendCodeToEmail(verificationCode).then((response) => {
+            if(response.status === 200){
+                alert('인증 성공');
+            }else{
+                alert('코드를 다시 확인해주세요.');
+            }
+        });
         setEmailSatisfied(true);
     }
+    /////////////////////////////////
+    
 
+    /////////////////////////////////
+    //취소 버튼
     const handleCancle = () => {
         <Link to={'/'}/>
     }
+    /////////////////////////////////
+
+
 
     return (
         <div>
             <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
-                //이메일 인증 완료시 disabled true로 변경
                 <div disabled={emailSatisfied}>
                     <label htmlFor="email">이메일: </label>
                     <input
@@ -104,9 +123,9 @@ const SignUp = () => {
                             type="text"
                             id="verificationCode"
                             name="verificationCode"
-                            onChange={handleChange}
+                            onChange={handleVerificationCodeChange}
                         />
-                        <input type='button' value='확인' onSubmit={handleEmailVerification} />
+                        <input type='button' value='확인' onSubmit={handleCodeVerification} />
                     </div>
                 )}
                 <div>
@@ -116,6 +135,7 @@ const SignUp = () => {
                         id="username"
                         name="username"
                         value={formData.username}
+                        onChange={handleChange}
                     />
                 </div>
                 <div>

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/suvey/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class UserController {
 
