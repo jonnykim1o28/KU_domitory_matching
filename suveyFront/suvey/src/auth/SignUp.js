@@ -48,7 +48,8 @@ const SignUp = () => {
     const handleSignUp = () => {
         if(signupSatisfied){
             signup(formData).then((response) => {
-                <Link to={'/signin'}/>
+                alert('회원가입이 완료되었습니다.');
+                navigate('/');
             });
         }
         else if(!emailSatisfied){
@@ -98,12 +99,12 @@ const SignUp = () => {
 
     const handleNicknameCheck = () => {
         checkNickname(formData.nickname).then((response) => {
-            if(response.status === 400){
-                alert('이미 사용중인 아이디입니다.');
-            }
-            else{
+            if(response.status === 200){
                 alert('사용 가능한 아이디입니다.');
                 setNicknameSatisfied(true);
+            }
+            else{
+                alert('이미 사용중인 아이디입니다.');
             }
         });
     }
@@ -172,9 +173,9 @@ const SignUp = () => {
                     <label htmlFor="password">비밀번호 확인: </label>
                     <input
                         type='password'
-                        id='password_check'
-                        name='password_check'
-                        value={formData.password_check}
+                        id='passwordCheck'
+                        name='passwordCheck'
+                        value={passwordCheck}
                         onChange={handlePasswordCheck}
                     />
                 </div>
