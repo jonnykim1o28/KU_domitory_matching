@@ -83,7 +83,7 @@ public class UserController {
 
     //Todo  nickname 중복 확인을 해야 회원가입 권한을 넘겨줌
     @GetMapping("/nicknameCheck")
-    public ResponseEntity<?> isDuplicate(@RequestParam String nickname) {
+    public ResponseEntity<?> checkNickNameDuplicate(@RequestParam String nickname) {
 
         if (!nickname.equals("") && !userService.checkDuplicateNickName(nickname)) {
             log.info("NickName Check Succeed");

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { sendCodeToEmail, signup } from '../api/ApiService';
-import { Link } from 'react-router-dom';
+import { sendCodeToEmail, signup, verificationEmail, checkNickname } from '../api/ApiService';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
-        username: '',
+        nickname: '',
         email: '',
         password: '',
     });
@@ -14,6 +16,7 @@ const SignUp = () => {
 
 
     const [emailSatisfied, setEmailSatisfied] = useState(false);    
+    const [nicknameSatisfied, setNicknameSatisfied] = useState(false);
     const [passwordCheck, setPasswordCheck] = useState('');
     const [showVerificationInput, setShowVerificationInput] = useState(false);
     const [showEmailVerificationInput, setShowEmailVerificationInput] = useState(false);
@@ -79,7 +82,9 @@ const SignUp = () => {
     };
 
     const handleCodeVerification =() =>{
-        sendCodeToEmail(verificationCode).then((response) => {
+        console.log(formData.email);
+        console.log(verificationCode);
+        verificationEmail(formData.email, verificationCode).then((response) => {
             if(response.status === 200){
                 alert('인증 성공');
             }else{
@@ -91,10 +96,22 @@ const SignUp = () => {
     /////////////////////////////////
     
 
+    const handleNicknameCheck = () => {
+        checkNickname(formData.nickname).then((response) => {
+            if(response.status === 400){
+                alert('이미 사용중인 아이디입니다.');
+            }
+            else{
+                alert('사용 가능한 아이디입니다.');
+                setNicknameSatisfied(true);
+            }
+        });
+    }
+
     /////////////////////////////////
     //취소 버튼
     const handleCancle = () => {
-        <Link to={'/'}/>
+        navigate(-1);    
     }
     /////////////////////////////////
 
@@ -123,20 +140,23 @@ const SignUp = () => {
                             type="text"
                             id="verificationCode"
                             name="verificationCode"
+                            value={verificationCode}
                             onChange={handleVerificationCodeChange}
                         />
-                        <input type='button' value='확인' onSubmit={handleCodeVerification} />
+                        <input type='button' value='확인' onClick={handleCodeVerification} />
                     </div>
                 )}
                 <div>
-                    <label htmlFor="username">아이디: </label>
+                    <label htmlFor="nickname">아이디: </label>
                     <input
                         type="text"
-                        id="username"
-                        name="username"
-                        value={formData.username}
+                        id="nickname"
+                        name="nickname"
+                        value={formData.nickname}
                         onChange={handleChange}
+                        disabled={nicknameSatisfied}
                     />
+                    <button type='button' onClick={handleNicknameCheck}>중복확인</button>
                 </div>
                 <div>
                     <label htmlFor="password">비밀번호: </label>
@@ -160,7 +180,7 @@ const SignUp = () => {
                 </div>
                 <button type='submit' onClick={handleCancle}>취소</button>
                 //비밀번호와 비밀번호 확인이 같으면 회원가입 버튼 활성화
-                <button type="submit" onClick={handleSignUp}>회원가입</button>
+                <button type="submit" onClick={handleSignUp} disabled={!signupSatisfied}>회원가입</button>
             </form>
         </div>
     );

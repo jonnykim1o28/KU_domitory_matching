@@ -14,10 +14,9 @@
       <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/5.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/5.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/6.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/6.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/7.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/7.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/8.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/8.pack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/9.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/9.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/index.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/src/auth/SignIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/src/auth/SignIn.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../suveyFront/suvey/src/auth/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/../suveyFront/suvey/src/auth/SignUp.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +108,7 @@
       <workItem from="1739290047457" duration="11700000" />
       <workItem from="1739366535994" duration="10235000" />
       <workItem from="1739510557591" duration="32230000" />
-      <workItem from="1740237069073" duration="595000" />
+      <workItem from="1740237069073" duration="5616000" />
     </task>
     <servers />
   </component>
