@@ -64,7 +64,7 @@ export function signin(userDTO) {
             return response;
         }
         else if(response.token){
-            console.log(response);
+            console.log(response.token);
             localStorage.setItem("ACCESS_TOKEN", response.token);
             return response;
 

@@ -1,15 +1,14 @@
+import Nav from "./Nav";
 
-const  MainPage = () => {
-
-    
-
+const MainPage = () => {
     return (
         <div>
-            <h1>Main Page</h1>
+            <nav>
+                <Nav/>
+            </nav>
+            
         </div>
-    )   
-
+    );
 }
-
 
 export default MainPage;
