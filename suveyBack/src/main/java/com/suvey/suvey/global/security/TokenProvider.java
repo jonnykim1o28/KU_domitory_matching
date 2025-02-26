@@ -14,7 +14,8 @@ public class TokenProvider {
     private static final String SECRET_KEY="FlRpX30pMqDbiAkmlfArbrmVkDD4RqISskGZmBFax5oGVxzXXWUzTR5JyskiHMIV9M1Oicegkpi46AdvrcX1E6CmTUBc6IFbTPiD";
 
     public String create(UserEntity userEntity){
-        Date expiryDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
+        //토큰 만료일
+        Date expiryDate = Date.from(Instant.now().plus(10, ChronoUnit.DAYS));
 
         return Jwts.builder()
                 //header
