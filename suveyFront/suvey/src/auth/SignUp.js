@@ -24,7 +24,7 @@ const SignUp = () => {
 
     useEffect(() => {   
         setSignupSatisfied((formData.password === passwordCheck)&&emailSatisfied);
-    }, []);
+    }, [formData.password,passwordCheck, emailSatisfied]);
 
     
     
@@ -37,6 +37,7 @@ const SignUp = () => {
     
     const handlePasswordCheck = (e) => {
         setPasswordCheck(e.target.value);
+        console.log(passwordCheck);
     };
 
     const handleSubmit = (e) => {
@@ -88,6 +89,7 @@ const SignUp = () => {
         verificationEmail(formData.email, verificationCode).then((response) => {
             if(response.status === 200){
                 alert('인증 성공');
+                setEmailSatisfied(true);
             }else{
                 alert('코드를 다시 확인해주세요.');
             }
@@ -143,6 +145,7 @@ const SignUp = () => {
                             name="verificationCode"
                             value={verificationCode}
                             onChange={handleVerificationCodeChange}
+                            disabled={emailSatisfied}
                         />
                         <input type='button' value='확인' onClick={handleCodeVerification} />
                     </div>
@@ -160,7 +163,7 @@ const SignUp = () => {
                     <button type='button' onClick={handleNicknameCheck}>중복확인</button>
                 </div>
                 <div>
-                    <label htmlFor="password">비밀번호: </label>
+                    <label htmlFor="password">비밀번호: </label>
                     <input  
                         type="password"
                         id="password"
@@ -180,7 +183,6 @@ const SignUp = () => {
                     />
                 </div>
                 <button type='submit' onClick={handleCancle}>취소</button>
-                //비밀번호와 비밀번호 확인이 같으면 회원가입 버튼 활성화
                 <button type="submit" onClick={handleSignUp} disabled={!signupSatisfied}>회원가입</button>
             </form>
         </div>
