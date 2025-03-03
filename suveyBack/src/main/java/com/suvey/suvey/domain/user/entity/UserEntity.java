@@ -1,6 +1,7 @@
 package com.suvey.suvey.domain.user.entity;
 
 
+import com.suvey.suvey.domain.desired_user.DesiredUser;
 import com.suvey.suvey.domain.user_info.UserInfo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,8 +30,16 @@ public class UserEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private UserInfo information;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private DesiredUser desiredUser;
+
+
     public void updateInfo(UserInfo info){
         this.information = info;
+    }
+
+    public void updateDesiredUser(DesiredUser desiredUser){
+        this.desiredUser = desiredUser;
     }
 
 

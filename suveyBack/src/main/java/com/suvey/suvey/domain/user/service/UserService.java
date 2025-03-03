@@ -1,5 +1,6 @@
 package com.suvey.suvey.domain.user.service;
 
+import com.suvey.suvey.domain.desired_user.DesiredUser;
 import com.suvey.suvey.domain.user.entity.UserEntity;
 import com.suvey.suvey.domain.user.exception.DuplicateEmailException;
 import com.suvey.suvey.domain.user.repository.UserRepository;
@@ -119,6 +120,12 @@ public class UserService {
     public void setUserInfo(String userId, UserInfo userInfo) {
         UserEntity user = getById(userId);
         user.updateInfo(userInfo);
+    }
+
+    @Transactional
+    public void setDesiredUser(String userId, DesiredUser desiredUser) {
+        UserEntity user = getById(userId);
+        user.updateDesiredUser(desiredUser);
     }
 }
 
