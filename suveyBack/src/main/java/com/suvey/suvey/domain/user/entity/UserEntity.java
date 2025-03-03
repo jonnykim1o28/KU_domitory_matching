@@ -1,10 +1,8 @@
 package com.suvey.suvey.domain.user.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.suvey.suvey.domain.user_info.UserInfo;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +25,14 @@ public class UserEntity {
     private String nickname;
 
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserInfo information;
+
+    public void updateInfo(UserInfo info){
+        this.information = info;
+    }
+
 
 
 

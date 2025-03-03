@@ -3,8 +3,10 @@ package com.suvey.suvey.domain.user.service;
 import com.suvey.suvey.domain.user.entity.UserEntity;
 import com.suvey.suvey.domain.user.exception.DuplicateEmailException;
 import com.suvey.suvey.domain.user.repository.UserRepository;
+import com.suvey.suvey.domain.user_info.UserInfo;
 import com.suvey.suvey.global.mail.MailService;
 import com.suvey.suvey.global.redis.RedisService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,10 @@ public class UserService {
         }
     }
 
+
+
+
+
     public UserEntity getByCredentials(String nickname, String password) {
         final UserEntity originalUser = userRepository.findByNicknameAndPassword(nickname, password);
 
@@ -55,6 +61,14 @@ public class UserService {
         }
 
         return null;
+    }
+
+    public UserEntity getById(String userId){
+        if(userRepository.findById(userId).get()!=null){
+            return userRepository.findById(userId).get();
+        }else{
+            return null;
+        }
     }
 
     public void sendCodeToEmail(String toEmail){
@@ -100,4 +114,11 @@ public class UserService {
             throw new RuntimeException("verifiedCode Failed");
 
     }
+
+    @Transactional
+    public void setUserInfo(String userId, UserInfo userInfo) {
+        UserEntity user = getById(userId);
+        user.updateInfo(userInfo);
+    }
 }
+

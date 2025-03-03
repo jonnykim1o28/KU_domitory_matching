@@ -38,7 +38,7 @@ export async function call(api, method, request) {
             } catch (e) {
                 throw new Error("JSON 파싱 실패: " + e.message);
             }
-        } else if (response.status === 404 || response.status === 403) {
+        } else if (response.status === 401 || response.status === 403) {
             window.location.href = "/signin"; // redirect
         } else {
             const errorData = await response.text(); // 에러 메시지 가져오기
@@ -121,4 +121,11 @@ export function sendCodeToEmail(email){
 
 export function verificationEmail(email, code){
     return call(`/auth/emails/verifications?email=${email}&code=${code}`,"POST",null);
+}
+
+
+
+// UserInfoController 관련 API
+export function sendMyInfo(userInfoDTO){
+    return call("/info","POST",userInfoDTO);
 }

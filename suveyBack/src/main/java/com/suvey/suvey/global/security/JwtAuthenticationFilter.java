@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.security.Principal;
 /*
  *
  * JwtFilter는 클라이언트의 요청이 서버의 리소스에 도달하기 전에 JWT 토큰의 유효성을 검사하고,
@@ -45,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (token != null && !token.equalsIgnoreCase("null")) {
                 String userId = tokenProvider.validateAndGetUser(token);
+
                 log.info("Authenticated user ID : " + userId);
 
                 AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

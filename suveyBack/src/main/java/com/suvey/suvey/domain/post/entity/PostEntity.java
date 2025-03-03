@@ -35,7 +35,7 @@ public class PostEntity {
 
     private File file;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private GroupEntity group;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
