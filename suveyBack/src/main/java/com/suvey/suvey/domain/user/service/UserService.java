@@ -10,6 +10,7 @@ import com.suvey.suvey.global.redis.RedisService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +30,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final MailService mailService;
     private final RedisService redisService;
+    private final PasswordEncoder passwordEncoder;
     /*
     *
     * */
@@ -38,6 +40,7 @@ public class UserService {
     private long authCodeExpirationMillis;
 
     public void create(UserEntity user) {
+        user.updatePassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -55,17 +58,17 @@ public class UserService {
 
 
     public UserEntity getByCredentials(String nickname, String password) {
-        final UserEntity originalUser = userRepository.findByNicknameAndPassword(nickname, password);
+        String encodedPassword = userRepository.findPasswordByNickname(nickname);
+        String resultPassword = passwordEncoder.matches(password, encodedPassword) ? encodedPassword : null;
 
-        if (originalUser != null) {
-            return originalUser;
+        if(resultPassword != null) {
+            return userRepository.findByNicknameAndPassword(nickname, resultPassword);
         }
-
         return null;
     }
 
     public UserEntity getById(String userId){
-        if(userRepository.findById(userId).get()!=null){
+        if(userRepository.findById(userId).isPresent()){
             return userRepository.findById(userId).get();
         }else{
             return null;

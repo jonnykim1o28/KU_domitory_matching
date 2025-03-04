@@ -42,6 +42,10 @@ public class UserEntity {
         this.desiredUser = desiredUser;
     }
 
+    public void updatePassword(String password){
+        this.password = password;
+    }
+
 
 
 
